@@ -160,12 +160,26 @@ const ProductsView: React.FC<{
               <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">{product.category}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">{formatCurrencyBDT(product.price)}</td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <button onClick={() => onEdit(product)} className="text-accent hover:text-accent/80 mr-4">
-                  <PencilIcon />
-                </button>
-                <button onClick={() => onDelete(product.id)} className="text-destructive hover:text-destructive/80">
-                  <TrashIcon />
-                </button>
+                <div className="inline-flex items-center gap-3">
+                  <button
+                    onClick={() => onEdit(product)}
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-accent bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
+                    aria-label="Edit product"
+                    title="Edit product"
+                  >
+                    <PencilIcon />
+                    <span className="hidden sm:inline">Edit</span>
+                  </button>
+                  <button
+                    onClick={() => onDelete(product.id)}
+                    className="inline-flex items-center gap-2 text-destructive hover:text-destructive/80 px-2 py-1 rounded-md border border-destructive/30 hover:bg-destructive/10"
+                    aria-label="Delete product"
+                    title="Delete product"
+                  >
+                    <TrashIcon />
+                    <span className="hidden sm:inline">Delete</span>
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
