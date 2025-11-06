@@ -254,6 +254,7 @@ const AdminDashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingProduct, setEditingProduct] = useState<Product | null>(null)
+  const { logout } = useAuth()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -341,7 +342,28 @@ const AdminDashboard: React.FC = () => {
   return (
     <div className="flex h-screen bg-background">
       <Sidebar activeView={activeView} setActiveView={setActiveView} />
-      <main className="flex-1 p-8 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto">
+        <div className="sticky top-0 z-10 bg-card/80 backdrop-blur supports-[backdrop-filter]:bg-card/60 border-b border-border px-6 py-4 flex items-center justify-between">
+          <h1 className="text-lg font-semibold text-foreground">Admin Panel</h1>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                try { localStorage.setItem('trendhive:page','store') } catch {}
+                window.dispatchEvent(new CustomEvent('navigate:home'))
+              }}
+              className="px-3 py-1.5 rounded-md border border-border bg-background hover:bg-muted text-sm"
+            >
+              Back to Store
+            </button>
+            <button
+              onClick={logout}
+              className="px-3 py-1.5 rounded-md border border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/20 text-sm"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+        <div className="p-8">
         {isLoading ? (
           <div className="flex justify-center items-center h-full">
             <LoadingIcon />
@@ -361,6 +383,7 @@ const AdminDashboard: React.FC = () => {
             {activeView === "orders" && <OrdersView orders={orders} onUpdateStatus={handleUpdateOrderStatus} />}
           </>
         )}
+        </div>
       </main>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <h3 className="text-2xl font-bold mb-4 text-foreground">

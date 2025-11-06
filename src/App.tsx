@@ -240,6 +240,16 @@ const AppContent: React.FC = () => {
     return () => window.removeEventListener("cart:add", onAdd as EventListener)
   }, [])
 
+  // Allow children (e.g., AdminDashboard) to navigate home without direct props
+  useEffect(() => {
+    const onGoHome = () => {
+      setCurrentPage("store")
+      try { localStorage.setItem('trendhive:page','store') } catch {}
+    }
+    window.addEventListener("navigate:home", onGoHome as EventListener)
+    return () => window.removeEventListener("navigate:home", onGoHome as EventListener)
+  }, [])
+
   const handleToggleSearch = () => {
     if (searchModalRef.current) {
       searchModalRef.current.toggle()
